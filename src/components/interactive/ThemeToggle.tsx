@@ -16,23 +16,55 @@ import { useState, useEffect } from 'react';
  */
 
 export default function ThemeToggle() {
-  // Initialize state from localStorage using globalThis for safer access
-  const [theme, setTheme] = useState(globalThis.localStorage?.getItem('theme') ?? 'dark');
+  // Initialize with null to avoid SSR/hydration mismatch
+  const [theme, setTheme] = useState<string | null>(null);
+
+  // Initialize from localStorage after mount (client-side only)
+  useEffect(() => {
+    const stored = localStorage.getItem('theme');
+    if (stored) {
+      setTheme(stored);
+    } else {
+      // Check system preference
+      const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+      setTheme(prefersDark ? 'dark' : 'light');
+    }
+  }, []);
 
   // Toggle between light and dark
-  const toggleTheme = () => setTheme(theme === 'light' ? 'dark' : 'light');
+  const toggleTheme = () => {
+    if (theme) {
+      setTheme(theme === 'light' ? 'dark' : 'light');
+    }
+  };
 
   // Apply theme changes and persist to localStorage
   useEffect(() => {
-    document.documentElement.classList.toggle('dark', theme === 'dark');
-    localStorage.setItem('theme', theme);
+    if (theme) {
+      document.documentElement.classList.toggle('dark', theme === 'dark');
+      localStorage.setItem('theme', theme);
+    }
   }, [theme]);
+
+  // Show placeholder while hydrating to prevent layout shift
+  if (!theme) {
+    return (
+      <button
+        type="button"
+        className="p-2 rounded-lg text-star-dim hover:text-star-light hover:bg-star-light/10 transition-colors duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-biolume-cyan focus-visible:ring-offset-2 focus-visible:ring-offset-ocean-deep"
+        aria-label="Loading theme"
+        disabled
+      >
+        <span className="text-lg opacity-50">☀️</span>
+      </button>
+    );
+  }
 
   return (
     <button
       type="button"
       onClick={toggleTheme}
-      className="p-2 rounded-lg text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
+      className="p-2 rounded-lg text-star-dim hover:text-star-light hover:bg-star-light/10 transition-colors duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-biolume-cyan focus-visible:ring-offset-2 focus-visible:ring-offset-ocean-deep"
       aria-label={theme === 'dark' ? 'Switch to light mode' : 'Switch to dark mode'}
       title={theme === 'dark' ? 'Switch to light mode' : 'Switch to dark mode'}
     >

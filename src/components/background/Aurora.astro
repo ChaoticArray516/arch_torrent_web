@@ -1,0 +1,30 @@
+---
+/**
+ * Aurora Background Component - Cosmic Ocean Theme v3.1
+ *
+ * Engineering Note:
+ * Pure CSS background animation creates the breathing aurora effect.
+ * Multiple large, blurred radial-gradients serve as background layers,
+ * driven by @keyframes to move slowly and organically.
+ * This achieves an ever-changing, living light effect with minimal performance cost.
+ *
+ * -z-20 ensures aurora stays behind the starfield canvas (-z-10)
+ * opacity-50 dark:opacity-30 makes aurora softer in light mode, subtler in dark mode
+ */
+---
+
+<div
+  aria-hidden="true"
+  class="fixed top-0 left-0 w-full h-full -z-20 opacity-50 dark:opacity-30 pointer-events-none"
+>
+  <div
+    class="absolute inset-0 animate-aurora"
+    style="
+      background-image:
+        radial-gradient(ellipse 100% 100% at 50% 50%, rgba(130, 80, 223, 0.3), rgba(13, 17, 23, 0)),
+        radial-gradient(ellipse 100% 100% at 50% 50%, rgba(51, 187, 197, 0.3), rgba(13, 17, 23, 0));
+      background-size: 200% 200%;
+    "
+  >
+  </div>
+</div>

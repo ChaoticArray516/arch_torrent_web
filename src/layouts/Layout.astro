@@ -2,6 +2,8 @@
 import '../styles/global.css';
 import Header from '../components/layout/Header.astro';
 import Footer from '../components/layout/Footer.astro';
+import Starfield from '../components/background/Starfield.astro';
+import Aurora from '../components/background/Aurora.astro';
 import { ClientRouter } from 'astro:transitions';
 
 /**
@@ -102,7 +104,15 @@ const ogImageURL = new URL(ogImage, Astro.site);
     <!-- View Transitions for SPA-like navigation -->
     <ClientRouter />
   </head>
-  <body class="min-h-screen bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100 transition-colors duration-200">
+  <body class="min-h-screen bg-ocean-deep text-star-light transition-colors duration-300">
+    {/*
+      Cosmic Ocean Background - Layered visual experience
+      - Aurora: Deep sea bioluminescence (-z-20)
+      - Starfield: Canvas-based flowing stars (-z-10)
+    */}
+    <Aurora />
+    <Starfield />
+
     {/*
       Skip Navigation Link (WCAG 2.4.1 - Bypass Blocks)
       - Hidden visually but available to screen readers
@@ -111,7 +121,7 @@ const ogImageURL = new URL(ogImage, Astro.site);
     */}
     <a
       href="#main-content"
-      class="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-50 focus:px-4 focus:py-2 focus:bg-blue-600 focus:text-white focus:rounded-lg focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+      class="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-50 focus:px-4 focus:py-2 focus:bg-biolume-cyan focus:text-ocean-deep focus:rounded-lg focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-biolume-cyan"
     >
       Skip to main content
     </a>

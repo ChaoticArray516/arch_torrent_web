@@ -31,15 +31,21 @@ const {
 <span
   class={cn(
     // Base styles
-    'inline-flex items-center rounded-full font-medium',
-    // Variant color styles
+    'inline-flex items-center rounded-full font-medium transition-colors duration-300',
+    // Variant color styles - Cosmic Ocean theme
     {
-      'bg-gray-100 text-gray-800': variant === 'default',
-      'bg-blue-100 text-blue-800': variant === 'primary',
-      'bg-purple-100 text-purple-800': variant === 'secondary',
-      'bg-green-100 text-green-800': variant === 'success',
-      'bg-yellow-100 text-yellow-800': variant === 'warning',
-      'bg-cyan-100 text-cyan-800': variant === 'info',
+      // Default: Starlight subtle
+      'bg-star-light/10 text-star-light border border-star-light/20': variant === 'default',
+      // Primary: Bioluminescent cyan
+      'bg-biolume-cyan/20 text-biolume-cyan border border-biolume-cyan/30 shadow-[0_0_10px_rgba(51,187,197,0.15)]': variant === 'primary',
+      // Secondary: Nebula purple
+      'bg-nebula-purple/20 text-nebula-purple border border-nebula-purple/30': variant === 'secondary',
+      // Success: Bioluminescent lime
+      'bg-biolume-lime/20 text-biolume-lime border border-biolume-lime/30': variant === 'success',
+      // Warning: Soft amber glow
+      'bg-yellow-500/20 text-yellow-300 border border-yellow-500/30': variant === 'warning',
+      // Info: Nebula blue
+      'bg-nebula-blue/20 text-nebula-blue border border-nebula-blue/30': variant === 'info',
     },
     // Size styles
     {

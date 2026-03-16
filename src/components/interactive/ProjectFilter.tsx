@@ -1,17 +1,15 @@
-import { useState, useEffect } from 'react';
+import { useStore } from '@nanostores/react';
+import { selectedCategory } from '../../lib/store';
 
 /**
- * ProjectFilter Component
- * Interactive filter for project categories using React.
+ * ProjectFilter Component - Cosmic Ocean Theme
+ * Interactive "Deep Space Scanner" for project categories.
  *
- * Features:
- * - Client-side filtering of projects without page reload
- * - Persists filter state in component state
- * - Manipulates DOM directly to show/hide project cards
- * - Accessible with proper ARIA attributes
- *
- * This is an "Island" component - it hydrates on the client
- * while the surrounding page remains static HTML.
+ * Engineering Note:
+ * Uses Nano Stores like "quantum entanglement" to share state
+ * across the React island and Astro static components.
+ * When a category is selected, the store updates and all
+ * subscribers (including ProjectGrid) respond instantly.
  */
 
 interface Props {
@@ -20,26 +18,7 @@ interface Props {
 }
 
 export default function ProjectFilter({ categories }: Props) {
-  const [activeCategory, setActiveCategory] = useState('all');
-
-  useEffect(() => {
-    const grid = document.getElementById('project-grid');
-    const noProjects = document.getElementById('no-projects');
-    if (!grid) return;
-
-    // Get all project items using data-category selector as per manual spec
-    let visibleCount = 0;
-    grid.querySelectorAll<HTMLElement>('[data-category]').forEach((el) => {
-      const shouldShow = activeCategory === 'all' || el.dataset.category === activeCategory;
-      el.style.display = shouldShow ? 'block' : 'none';
-      if (shouldShow) visibleCount++;
-    });
-
-    // Show/hide empty state message
-    if (noProjects) {
-      noProjects.style.display = visibleCount === 0 ? 'block' : 'none';
-    }
-  }, [activeCategory]);
+  const $category = useStore(selectedCategory);
 
   // Format category for display (capitalize first letter)
   const formatCategory = (cat: string): string => {
@@ -52,21 +31,21 @@ export default function ProjectFilter({ categories }: Props) {
     <div
       role="tablist"
       aria-label="Project category filter"
-      className="flex flex-wrap justify-center gap-2"
+      className="flex flex-wrap justify-center gap-3 mb-12"
     >
       {categories.map((cat) => (
         <button
           key={cat}
-          onClick={() => setActiveCategory(cat)}
+          onClick={() => selectedCategory.set(cat)}
           role="tab"
-          aria-selected={activeCategory === cat}
+          aria-selected={$category === cat}
           className={`
-            px-4 py-2 rounded-full text-sm font-medium transition-all duration-200
-            focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2
+            px-4 py-2 rounded-full text-sm font-medium transition-all duration-300
+            focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-biolume-cyan focus-visible:ring-offset-2 focus-visible:ring-offset-ocean-deep
             ${
-              activeCategory === cat
-                ? 'bg-blue-600 text-white shadow-md'
-                : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+              $category === cat
+                ? 'bg-biolume-cyan text-ocean-deep shadow-[0_0_15px_rgba(51,187,197,0.4)]'
+                : 'bg-ocean-abyss/50 text-star-dim border border-star-light/20 hover:border-biolume-cyan/50 hover:text-star-light backdrop-blur-sm'
             }
           `}
         >

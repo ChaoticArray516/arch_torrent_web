@@ -1,0 +1,38 @@
+---
+import Layout from '../layouts/Layout.astro';
+
+/**
+ * About Page
+ * Personal introduction and contact information.
+ */
+---
+
+<Layout
+  title="About"
+  description="Learn more about me and my work."
+>
+  <section class="container mx-auto px-4 py-20 max-w-3xl">
+    <h1 class="text-4xl md:text-5xl font-bold tracking-tight text-star-light mb-8">
+      About Me
+    </h1>
+
+    <div class="prose prose-lg prose-invert prose-biolume max-w-none">
+      <p class="text-xl text-star-dim leading-relaxed">
+        I'm a developer passionate about building fast, accessible, and beautiful web experiences
+        with modern technologies.
+      </p>
+
+      <h2 class="text-star-light">Skills</h2>
+      <ul class="text-star-dim">
+        <li>Frontend: Astro, React, TypeScript, Tailwind CSS</li>
+        <li>Backend: Node.js, Python</li>
+        <li>Tools: Git, Docker, CI/CD</li>
+      </ul>
+
+      <h2 class="text-star-light">Contact</h2>
+      <p class="text-star-dim">
+        Feel free to reach out to me via email or connect with me on social media.
+      </p>
+    </div>
+  </section>
+</Layout>

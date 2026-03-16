@@ -1,23 +1,251 @@
 /**
- * Global Styles
- * Tailwind CSS v4 configuration with custom theme settings.
+ * Global Styles - Cosmic Ocean Theme v3.1
+ * Tailwind CSS v4 configuration with Cosmic Ocean color palette.
  *
  * Features:
  * - Tailwind CSS v4 with @import
- * - Custom container configuration
+ * - Cosmic Ocean color system (deep ocean, starlight, bioluminescence, nebula)
  * - Dark mode support via class strategy
  * - Responsive design utilities
+ *
+ * Engineering Note:
+ * The color palette defines the "physical constants" of our universe.
+ * All colors are tuned to create a deep, serene yet vibrant visual experience
+ * reminiscent of floating in deep space above a bioluminescent ocean.
  */
 
 /* Import Tailwind CSS */
 @import "tailwindcss";
 
-/* Theme configuration for Tailwind v4 */
+/* Theme configuration for Tailwind v4 - Cosmic Ocean Color System */
 @theme {
   /* Container settings */
   --container-center: true;
   --container-padding: 1.5rem;
-
-  /* Custom container max-width for 2xl breakpoint */
   --container-max-width-2xl: 1400px;
+
+  /* ============================================
+     COSMIC OCEAN COLOR PALETTE
+     ============================================ */
+
+  /* Deep Ocean Background Colors (replaces gray-900) */
+  --color-ocean-deep: #0D1117;      /* RGB(13, 17, 23) - Layered deep space black */
+  --color-ocean-abyss: #010409;     /* RGB(1, 4, 9) - Deepest background, almost pure black */
+
+  /* Starlight & Text Colors (replaces gray-100/white) */
+  --color-star-light: #E6EDF3;      /* RGB(230, 237, 243) - Gentle starlight white, not harsh */
+  --color-star-dim: #8B949E;        /* RGB(139, 148, 158) - Dim star color for secondary text */
+
+  /* Bioluminescence & Aurora Colors (core accent & interactive colors) */
+  --color-biolume-cyan: #33BBC5;    /* RGB(51, 187, 197) - Bright bioluminescent cyan */
+  --color-biolume-teal: #85E6C5;    /* RGB(133, 230, 197) - Soft underwater glow */
+  --color-biolume-lime: #C8F560;    /* RGB(200, 245, 96) - Vital fluorescent green */
+
+  /* Nebula & Interactive Colors (replaces blue/purple) */
+  --color-nebula-purple: #8250DF;   /* RGB(130, 80, 223) - Mysterious nebula purple */
+  --color-nebula-pink: #C5559F;     /* RGB(197, 85, 159) - Soft pink stardust */
+  --color-nebula-blue: #4A90E2;     /* RGB(74, 144, 226) - Cosmic blue for links/highlights */
+
+  /* ============================================
+     ANIMATION KEYFRAMES
+     ============================================ */
+
+  /* Aurora animation - flowing organic light effect */
+  --animate-aurora: aurora 60s linear infinite;
+
+  /* Fade in up animation - text entrance */
+  --animate-fade-in-up: fadeInUp 1s ease-out forwards;
+
+  @keyframes aurora {
+    from {
+      background-position: 50% 50%, 50% 50%;
+    }
+    to {
+      background-position: 350% 50%, 350% 50%;
+    }
+  }
+
+  @keyframes fadeInUp {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+}
+
+/* ============================================
+   GLOBAL BASE STYLES
+   ============================================ */
+
+/* ============================================
+   THEME MODES
+   ============================================ */
+
+/* Default dark mode - The Cosmic Ocean experience */
+html {
+  background-color: var(--color-ocean-deep);
+  color: var(--color-star-light);
+}
+
+html.dark {
+  background-color: var(--color-ocean-deep);
+  color: var(--color-star-light);
+}
+
+/* Light mode override */
+html:not(.dark) {
+  background-color: var(--color-star-light);
+  color: var(--color-ocean-deep);
+}
+
+/* Ensure body inherits background */
+body {
+  background-color: inherit;
+  color: inherit;
+  min-height: 100vh;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* Smooth transitions for theme switching - applied to specific elements only */
+html {
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+body {
+  /* Ensure full viewport coverage */
+  min-height: 100vh;
+}
+
+/* Disable transitions for users who prefer reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* Selection styling - bioluminescent glow */
+::selection {
+  background-color: rgba(51, 187, 197, 0.3);
+  color: var(--color-star-light);
+}
+
+/* Scrollbar styling for webkit browsers */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--color-ocean-abyss);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--color-star-dim);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-biolume-cyan);
+}
+
+/* ============================================
+   PROSE STYLES - Cosmic Ocean Theme for Blog Content
+   ============================================ */
+
+/* Custom prose theme for bioluminescent blog content */
+.prose-biolume {
+  /* Headings */
+  --tw-prose-headings: var(--color-star-light);
+  --tw-prose-lead: var(--color-star-dim);
+  --tw-prose-links: var(--color-biolume-cyan);
+  --tw-prose-bold: var(--color-star-light);
+  --tw-prose-counters: var(--color-star-dim);
+  --tw-prose-bullets: var(--color-biolume-cyan);
+  --tw-prose-hr: rgba(139, 148, 158, 0.2);
+  --tw-prose-quotes: var(--color-star-dim);
+  --tw-prose-quote-borders: var(--color-nebula-purple);
+  --tw-prose-captions: var(--color-star-dim);
+  --tw-prose-kbd: var(--color-star-light);
+  --tw-prose-kbd-shadows: rgba(0, 0, 0, 0.3);
+  --tw-prose-code: var(--color-biolume-teal);
+  --tw-prose-pre-code: var(--color-star-light);
+  --tw-prose-pre-bg: rgba(1, 4, 9, 0.8);
+  --tw-prose-th-borders: rgba(139, 148, 158, 0.3);
+  --tw-prose-td-borders: rgba(139, 148, 158, 0.2);
+}
+
+/* Blockquote styling - Cosmic Ocean theme */
+.prose-biolume blockquote {
+  background: rgba(130, 80, 223, 0.1);
+  border-left: 4px solid var(--color-nebula-purple);
+  border-radius: 0 8px 8px 0;
+  padding: 1rem 1.5rem;
+  font-style: italic;
+  box-shadow: 0 0 20px rgba(130, 80, 223, 0.1);
+}
+
+/* Code blocks - Data Stream styling */
+.prose-biolume pre {
+  background: var(--color-ocean-abyss);
+  border: 1px solid rgba(139, 148, 158, 0.2);
+  border-radius: 12px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+}
+
+/* Inline code */
+.prose-biolume code {
+  background: rgba(51, 187, 197, 0.1);
+  border: 1px solid rgba(51, 187, 197, 0.2);
+  border-radius: 4px;
+  padding: 0.2em 0.4em;
+  font-size: 0.875em;
+}
+
+/* Lists */
+.prose-biolume ul > li::marker {
+  color: var(--color-biolume-cyan);
+}
+
+.prose-biolume ol > li::marker {
+  color: var(--color-star-dim);
+}
+
+/* Links hover effect */
+.prose-biolume a {
+  text-decoration: none;
+  border-bottom: 1px solid transparent;
+  transition: border-color 0.3s ease, color 0.3s ease;
+}
+
+.prose-biolume a:hover {
+  border-bottom-color: var(--color-biolume-cyan);
+  color: var(--color-biolume-teal);
+}
+
+/* Tables */
+.prose-biolume table {
+  background: rgba(13, 17, 23, 0.5);
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.prose-biolume th {
+  background: rgba(51, 187, 197, 0.1);
+  font-weight: 600;
+  color: var(--color-star-light);
+}
+
+/* Strong text */
+.prose-biolume strong {
+  color: var(--color-biolume-cyan);
+  font-weight: 600;
 }

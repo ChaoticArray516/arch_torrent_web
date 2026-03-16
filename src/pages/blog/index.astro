@@ -33,14 +33,14 @@ const formatDate = (date: Date): string => {
   title="Blog"
   description="Thoughts on web development, software engineering, and technology."
 >
-  <section class="container mx-auto px-4 py-16">
+  <section class="container mx-auto px-4 py-20">
     {/* Page Header */}
-    <div class="text-center mb-12">
-      <h1 class="text-4xl font-bold tracking-tight text-gray-900 dark:text-white mb-4">
-        Blog
+    <div class="text-center mb-16">
+      <h1 class="text-4xl md:text-5xl font-bold tracking-tight text-star-light mb-4">
+        Interstellar Logs
       </h1>
-      <p class="text-lg text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">
-        Thoughts on web development, software engineering, and technology.
+      <p class="text-lg text-star-dim max-w-2xl mx-auto">
+        Chronicles from the digital cosmos - thoughts on web development, engineering, and technology.
       </p>
     </div>
 
@@ -48,43 +48,43 @@ const formatDate = (date: Date): string => {
     {posts.length > 0 ? (
       <div class="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
         {posts.map((post) => (
-          <article class="group flex flex-col overflow-hidden rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 shadow-sm transition-all duration-200 hover:shadow-md">
+          <article class="group flex flex-col overflow-hidden rounded-xl border border-star-light/10 bg-ocean-abyss/30 backdrop-blur-md shadow-lg transition-all duration-300 hover:border-biolume-cyan/50 hover:shadow-[0_0_30px_rgba(51,187,197,0.2)] hover:-translate-y-2">
             {/* Post Link Wrapper */}
             <a href={`/blog/${post.id}/`} class="flex flex-col flex-grow p-6">
               {/* Post Meta */}
-              <div class="flex items-center gap-2 text-sm text-gray-500 dark:text-gray-400 mb-3">
+              <div class="flex items-center gap-2 text-sm text-star-dim mb-3">
                 <time datetime={post.data.publishedAt.toISOString()}>
                   {formatDate(post.data.publishedAt)}
                 </time>
               </div>
 
               {/* Post Title */}
-              <h2 class="text-xl font-semibold text-gray-900 dark:text-white mb-3 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">
+              <h2 class="text-xl font-semibold text-star-light mb-3 group-hover:text-biolume-cyan transition-colors duration-300">
                 {post.data.title}
               </h2>
 
               {/* Post Summary */}
-              <p class="text-gray-600 dark:text-gray-400 line-clamp-3 mb-4 flex-grow">
+              <p class="text-star-dim line-clamp-3 mb-4 flex-grow">
                 {post.data.summary}
               </p>
 
               {/* Tags */}
               <div class="flex flex-wrap gap-2 mt-auto">
                 {post.data.tags.slice(0, 3).map((tag) => (
-                  <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300">
+                  <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-biolume-cyan/20 text-biolume-cyan border border-biolume-cyan/30">
                     {tag}
                   </span>
                 ))}
                 {post.data.tags.length > 3 && (
-                  <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300">
+                  <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-star-light/10 text-star-dim border border-star-light/20">
                     +{post.data.tags.length - 3}
                   </span>
                 )}
               </div>
 
               {/* Read More Link */}
-              <div class="mt-4 flex items-center text-sm font-medium text-blue-600 dark:text-blue-400">
-                Read more
+              <div class="mt-4 flex items-center text-sm font-medium text-biolume-cyan group-hover:text-biolume-teal transition-colors duration-300">
+                Read transmission
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   viewBox="0 0 20 20"
@@ -105,7 +105,7 @@ const formatDate = (date: Date): string => {
     ) : (
       /* Empty State */
       <div class="text-center py-16">
-        <p class="text-gray-500 dark:text-gray-400">No blog posts yet. Check back soon!</p>
+        <p class="text-star-dim">No transmissions recorded yet. Check back soon!</p>
       </div>
     )}
   </section>

@@ -28,12 +28,12 @@ allProjects.sort((a, b) => b.data.publishedAt.valueOf() - a.data.publishedAt.val
 const categories = ['all', ...new Set(allProjects.map(p => p.data.category))];
 ---
 
-<section id="projects" class="container mx-auto px-4 py-16">
-  <h2 class="text-3xl font-bold tracking-tight text-center mb-4 text-gray-900">
-    My Portfolio
+<section id="projects" class="container mx-auto px-4 py-20">
+  <h2 class="text-4xl font-bold tracking-tight text-center mb-4 text-star-light">
+    Stellar Work
   </h2>
-  <p class="text-center text-gray-600 mb-12 max-w-2xl mx-auto">
-    A collection of projects showcasing my work across web, mobile, and open-source development.
+  <p class="text-lg text-star-dim text-center max-w-2xl mx-auto mb-12">
+    A collection of galaxies I have explored and built.
   </p>
 
   <!-- Interactive Island: Project Filter
@@ -51,6 +51,57 @@ const categories = ['all', ...new Set(allProjects.map(p => p.data.category))];
 
   <!-- Empty state shown when no projects match the filter -->
   <div id="no-projects" class="hidden text-center py-16">
-    <p class="text-gray-500">No projects found in this category.</p>
+    <p class="text-star-dim">No signals detected in this sector.</p>
   </div>
 </section>
+
+<script>
+  /**
+   * Client-side filtering script - Cosmic Ocean Theme
+   *
+   * Engineering Note:
+   * This script subscribes to the Nano Store selectedCategory atom.
+   * When the ProjectFilter component updates the store, this handler
+   * animates the project cards in/out with smooth transitions.
+   */
+  import { selectedCategory } from '../../lib/store';
+
+  const grid = document.getElementById('project-grid');
+  const noProjects = document.getElementById('no-projects');
+
+  if (grid) {
+    const allItems = Array.from(grid.children) as HTMLElement[];
+
+    selectedCategory.subscribe((category) => {
+      let visibleCount = 0;
+
+      allItems.forEach((item) => {
+        const itemCategory = item.dataset.category;
+        const shouldShow = category === 'all' || itemCategory === category;
+
+        // Apply smooth transition
+        item.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+
+        if (shouldShow) {
+          item.style.opacity = '1';
+          item.style.transform = 'scale(1)';
+          item.style.display = 'block';
+          visibleCount++;
+        } else {
+          item.style.opacity = '0';
+          item.style.transform = 'scale(0.9)';
+          setTimeout(() => {
+            if (selectedCategory.get() !== 'all' && item.dataset.category !== selectedCategory.get()) {
+              item.style.display = 'none';
+            }
+          }, 500);
+        }
+      });
+
+      // Toggle empty state
+      if (noProjects) {
+        noProjects.style.display = visibleCount === 0 ? 'block' : 'none';
+      }
+    });
+  }
+</script>

@@ -40,22 +40,26 @@ const Tag = href ? 'a' : 'button';
 <Tag
   href={href}
   class={cn(
-    // Base styles - applied to all variants
-    'inline-flex items-center justify-center rounded-lg font-medium transition-all duration-200',
-    'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2',
+    // Base styles
+    'inline-flex items-center justify-center rounded-lg font-medium transition-all duration-300',
+    'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-offset-ocean-deep',
     'disabled:pointer-events-none disabled:opacity-50',
-    // Variant styles
+    // Variant styles - Cosmic Ocean theme
     {
-      'bg-blue-600 text-white hover:bg-blue-700 focus-visible:ring-blue-500': variant === 'primary',
-      'bg-gray-200 text-gray-900 hover:bg-gray-300 focus-visible:ring-gray-500': variant === 'secondary',
-      'hover:bg-gray-100 hover:text-gray-900 focus-visible:ring-gray-500': variant === 'ghost',
-      'border border-gray-300 bg-transparent hover:bg-gray-100 focus-visible:ring-gray-500': variant === 'outline',
+      // Primary: Bioluminescent glow button
+      'bg-biolume-cyan text-ocean-deep hover:bg-biolume-teal focus-visible:ring-biolume-cyan shadow-[0_0_15px_rgba(51,187,197,0.3)] hover:shadow-[0_0_25px_rgba(133,230,197,0.5)]': variant === 'primary',
+      // Secondary: Nebula blue subtle button
+      'bg-nebula-blue/20 text-nebula-blue hover:bg-nebula-blue/30 focus-visible:ring-nebula-blue border border-nebula-blue/30': variant === 'secondary',
+      // Ghost: Transparent with hover effect
+      'text-star-dim hover:bg-star-light/10 hover:text-star-light focus-visible:ring-star-light': variant === 'ghost',
+      // Outline: Energy ring effect
+      'border border-star-dim/50 bg-transparent text-star-dim hover:bg-star-dim/10 hover:text-star-light hover:border-star-light hover:shadow-[0_0_15px_rgba(230,237,243,0.1)] focus-visible:ring-star-light': variant === 'outline',
     },
     // Size styles
     {
-      'h-8 px-3 text-xs': size === 'sm',
-      'h-10 px-4 text-sm': size === 'md',
-      'h-12 px-6 text-base': size === 'lg',
+      'h-9 px-4 text-sm': size === 'sm',
+      'h-11 px-6 text-base': size === 'md',
+      'h-12 px-8 text-lg': size === 'lg',
     },
     className
   )}
