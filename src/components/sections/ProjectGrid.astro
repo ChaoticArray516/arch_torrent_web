@@ -1,0 +1,56 @@
+---
+import { getCollection } from 'astro:content';
+import ProjectCard from '../ui/ProjectCard.astro';
+import ProjectFilter from '../interactive/ProjectFilter.tsx';
+
+/**
+ * ProjectGrid Section Component
+ * Displays a grid of projects with category filtering.
+ *
+ * Features:
+ * - Server-side data fetching from content collection at build time
+ * - Filters out work-in-progress projects
+ * - Sorts projects by publication date (newest first)
+ * - Extracts unique categories for the filter component
+ * - Combines static rendering with interactive filtering via Islands Architecture
+ */
+
+// Fetch all projects from content collection, filtering out WIP status
+const allProjects = await getCollection('projects', ({ data }) => {
+  return data.status !== 'wip';
+});
+
+// Sort projects by publication date in descending order (newest first)
+allProjects.sort((a, b) => b.data.publishedAt.valueOf() - a.data.publishedAt.valueOf());
+
+// Extract unique categories for the filter dropdown
+// 'all' is prepended as the default option to show all projects
+const categories = ['all', ...new Set(allProjects.map(p => p.data.category))];
+---
+
+<section id="projects" class="container mx-auto px-4 py-16">
+  <h2 class="text-3xl font-bold tracking-tight text-center mb-4 text-gray-900">
+    My Portfolio
+  </h2>
+  <p class="text-center text-gray-600 mb-12 max-w-2xl mx-auto">
+    A collection of projects showcasing my work across web, mobile, and open-source development.
+  </p>
+
+  <!-- Interactive Island: Project Filter
+       The client:load directive tells Astro to hydrate this React component
+       immediately when the page loads, enabling client-side interactivity -->
+  <ProjectFilter client:load categories={categories} />
+
+  <div id="project-grid" class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3 mt-8">
+    {allProjects.map(project => (
+      <div data-category={project.data.category} class="project-item">
+        <ProjectCard project={project} />
+      </div>
+    ))}
+  </div>
+
+  <!-- Empty state shown when no projects match the filter -->
+  <div id="no-projects" class="hidden text-center py-16">
+    <p class="text-gray-500">No projects found in this category.</p>
+  </div>
+</section>

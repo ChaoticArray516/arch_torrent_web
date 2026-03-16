@@ -1,0 +1,23 @@
+/**
+ * Global Styles
+ * Tailwind CSS v4 configuration with custom theme settings.
+ *
+ * Features:
+ * - Tailwind CSS v4 with @import
+ * - Custom container configuration
+ * - Dark mode support via class strategy
+ * - Responsive design utilities
+ */
+
+/* Import Tailwind CSS */
+@import "tailwindcss";
+
+/* Theme configuration for Tailwind v4 */
+@theme {
+  /* Container settings */
+  --container-center: true;
+  --container-padding: 1.5rem;
+
+  /* Custom container max-width for 2xl breakpoint */
+  --container-max-width-2xl: 1400px;
+}

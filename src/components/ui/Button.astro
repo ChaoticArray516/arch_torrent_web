@@ -1,0 +1,65 @@
+---
+import { cn } from '../../lib/utils';
+
+/**
+ * Button Component
+ * A versatile button component that renders as either a button or anchor element
+ * based on the presence of an href prop. Supports multiple variants and sizes.
+ *
+ * Features:
+ * - Zero JavaScript - pure HTML/CSS rendered at build time
+ * - Dynamic tag rendering (<button> or <a>)
+ * - Tailwind CSS styling with variant/size modifiers
+ * - Full TypeScript support with proper prop types
+ */
+
+interface Props {
+  /** Visual style variant */
+  variant?: 'primary' | 'secondary' | 'ghost' | 'outline';
+  /** Size preset */
+  size?: 'sm' | 'md' | 'lg';
+  /** Optional href - when provided, renders as <a> tag */
+  href?: string;
+  /** Additional CSS classes */
+  class?: string;
+}
+
+const {
+  variant = 'primary',
+  size = 'md',
+  href,
+  class: className,
+  ...rest
+} = Astro.props;
+
+// Dynamically choose the HTML tag based on href presence
+// This allows a single component to handle both button and link semantics
+const Tag = href ? 'a' : 'button';
+---
+
+<Tag
+  href={href}
+  class={cn(
+    // Base styles - applied to all variants
+    'inline-flex items-center justify-center rounded-lg font-medium transition-all duration-200',
+    'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2',
+    'disabled:pointer-events-none disabled:opacity-50',
+    // Variant styles
+    {
+      'bg-blue-600 text-white hover:bg-blue-700 focus-visible:ring-blue-500': variant === 'primary',
+      'bg-gray-200 text-gray-900 hover:bg-gray-300 focus-visible:ring-gray-500': variant === 'secondary',
+      'hover:bg-gray-100 hover:text-gray-900 focus-visible:ring-gray-500': variant === 'ghost',
+      'border border-gray-300 bg-transparent hover:bg-gray-100 focus-visible:ring-gray-500': variant === 'outline',
+    },
+    // Size styles
+    {
+      'h-8 px-3 text-xs': size === 'sm',
+      'h-10 px-4 text-sm': size === 'md',
+      'h-12 px-6 text-base': size === 'lg',
+    },
+    className
+  )}
+  {...rest}
+>
+  <slot />
+</Tag>

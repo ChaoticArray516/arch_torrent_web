@@ -1,0 +1,134 @@
+---
+import { getCollection, render } from 'astro:content';
+import Layout from '../../layouts/Layout.astro';
+
+/**
+ * Blog Post Detail Page (Dynamic Route)
+ * Renders individual blog posts using Astro's content collections.
+ *
+ * Features:
+ * - Static path generation at build time via getStaticPaths
+ * - MDX content rendering with custom components
+ * - Publication date and tags display
+ * - Back navigation to blog index
+ *
+ * @see https://docs.astro.build/en/guides/content-collections/
+ */
+
+/**
+ * Generate static paths for all blog posts
+ * This function runs at build time to create a route for each post
+ */
+export async function getStaticPaths() {
+  const posts = await getCollection('blog');
+  return posts.map((post) => ({
+    params: { slug: post.id },
+    props: { post },
+  }));
+}
+
+// Get the post data from props
+const { post } = Astro.props;
+
+// Render the MDX content using Astro v6 Content Layer API
+const { Content } = await render(post);
+
+// Format date for display
+const formatDate = (date: Date): string => {
+  return new Intl.DateTimeFormat('en-US', {
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric',
+  }).format(date);
+};
+---
+
+<Layout
+  title={post.data.title}
+  description={post.data.summary}
+>
+  <article class="container mx-auto px-4 py-16 max-w-3xl">
+    {/* Back Navigation */}
+    <a
+      href="/blog/"
+      class="inline-flex items-center text-sm font-medium text-gray-600 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors mb-8"
+    >
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        viewBox="0 0 20 20"
+        fill="currentColor"
+        class="w-4 h-4 mr-1"
+      >
+        <path
+          fill-rule="evenodd"
+          d="M17 10a.75.75 0 01-.75.75H5.612l3.96 3.96a.75.75 0 11-1.06 1.06l-5.25-5.25a.75.75 0 010-1.06l5.25-5.25a.75.75 0 111.06 1.06l-3.96 3.96h10.638A.75.75 0 0117 10z"
+          clip-rule="evenodd"
+        />
+      </svg>
+      Back to all posts
+    </a>
+
+    {/* Post Header */}
+    <header class="mb-10">
+      {/* Tags */}
+      <div class="flex flex-wrap gap-2 mb-4">
+        {post.data.tags.map((tag) => (
+          <span class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-blue-100 dark:bg-blue-900 text-blue-700 dark:text-blue-300">
+            {tag}
+          </span>
+        ))}
+      </div>
+
+      {/* Title */}
+      <h1 class="text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 dark:text-white tracking-tight mb-4">
+        {post.data.title}
+      </h1>
+
+      {/* Publication Date */}
+      <div class="flex items-center text-gray-500 dark:text-gray-400">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 20 20"
+          fill="currentColor"
+          class="w-5 h-5 mr-2"
+        >
+          <path
+            fill-rule="evenodd"
+            d="M5.75 2a.75.75 0 01.75.75V4h7V2.75a.75.75 0 011.5 0V4h.25A2.75 2.75 0 0118 6.75v8.5A2.75 2.75 0 0115.25 18H4.75A2.75 2.75 0 012 15.25v-8.5A2.75 2.75 0 014.75 4H5V2.75A.75.75 0 015.75 2zm-1 5.5c-.69 0-1.25.56-1.25 1.25v6.5c0 .69.56 1.25 1.25 1.25h10.5c.69 0 1.25-.56 1.25-1.25v-6.5c0-.69-.56-1.25-1.25-1.25H4.75z"
+            clip-rule="evenodd"
+          />
+        </svg>
+        <time datetime={post.data.publishedAt.toISOString()}>
+          {formatDate(post.data.publishedAt)}
+        </time>
+      </div>
+    </header>
+
+    {/* Post Content */}
+    <div class="prose prose-lg dark:prose-invert prose-blue max-w-none">
+      <Content />
+    </div>
+
+    {/* Post Footer */}
+    <footer class="mt-16 pt-8 border-t border-gray-200 dark:border-gray-700">
+      <a
+        href="/blog/"
+        class="inline-flex items-center text-sm font-medium text-blue-600 dark:text-blue-400 hover:underline"
+      >
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 20 20"
+          fill="currentColor"
+          class="w-4 h-4 mr-1"
+        >
+          <path
+            fill-rule="evenodd"
+            d="M17 10a.75.75 0 01-.75.75H5.612l3.96 3.96a.75.75 0 11-1.06 1.06l-5.25-5.25a.75.75 0 010-1.06l5.25-5.25a.75.75 0 111.06 1.06l-3.96 3.96h10.638A.75.75 0 0117 10z"
+            clip-rule="evenodd"
+          />
+        </svg>
+        Back to all posts
+      </a>
+    </footer>
+  </article>
+</Layout>

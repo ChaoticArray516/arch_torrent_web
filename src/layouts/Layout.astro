@@ -1,0 +1,132 @@
+---
+import '../styles/global.css';
+import Header from '../components/layout/Header.astro';
+import Footer from '../components/layout/Footer.astro';
+import { ClientRouter } from 'astro:transitions';
+
+/**
+ * Layout Component (v2.0) - SEO + A11y Enhanced
+ * The main layout wrapper for all pages in the portfolio website.
+ *
+ * Features:
+ * - Comprehensive SEO meta tags with Astro.url and Astro.site
+ * - Open Graph and Twitter Card support for social sharing
+ * - Canonical URLs for SEO
+ * - ViewTransitions for smooth SPA-like page navigation
+ * - Dark mode support with inline theme script
+ * - Accessibility: Skip navigation link (WCAG 2.4.1)
+ * - Accessibility: Semantic HTML landmarks
+ */
+
+interface Props {
+  /** Page title - displayed in browser tab and SEO */
+  title: string;
+  /** Page description - used for SEO meta tags */
+  description: string;
+  /** Optional canonical URL for SEO */
+  canonical?: string;
+  /** Optional Open Graph image path (relative to site root) */
+  ogImage?: string;
+}
+
+const {
+  title,
+  description,
+  canonical,
+  ogImage = '/og-image.jpg',
+} = Astro.props;
+
+// Construct full title with site name
+const fullTitle = `${title} | Portfolio`;
+
+// Build absolute URLs using Astro.site
+const canonicalURL = canonical ? new URL(canonical, Astro.site) : Astro.url;
+const ogImageURL = new URL(ogImage, Astro.site);
+---
+
+<!doctype html>
+<html lang="en" class="scroll-smooth">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="description" content={description} />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="generator" content={Astro.generator} />
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+
+    <!-- Canonical URL -->
+    <link rel="canonical" href={canonicalURL} />
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content={canonicalURL} />
+    <meta property="og:title" content={fullTitle} />
+    <meta property="og:description" content={description} />
+    <meta property="og:image" content={ogImageURL} />
+    <meta property="og:site_name" content="Portfolio" />
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:url" content={canonicalURL} />
+    <meta name="twitter:title" content={fullTitle} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogImageURL} />
+
+    <!-- Theme initialization script - inline to prevent flash (v2.0) -->
+    <!-- This script runs before any CSS to set the correct theme class -->
+    <!-- Note: Does NOT write to localStorage (handled by client component) -->
+    <script is:inline>
+      (function() {
+        const theme = (() => {
+          if (typeof localStorage !== 'undefined' && localStorage.getItem('theme')) {
+            return localStorage.getItem('theme');
+          }
+          if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+            return 'dark';
+          }
+          return 'light';
+        })();
+
+        if (theme === 'light') {
+          document.documentElement.classList.remove('dark');
+        } else {
+          document.documentElement.classList.add('dark');
+        }
+        // localStorage persistence handled by ThemeToggle client component
+      })();
+    </script>
+
+    <title>{fullTitle}</title>
+
+    <!-- View Transitions for SPA-like navigation -->
+    <ClientRouter />
+  </head>
+  <body class="min-h-screen bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100 transition-colors duration-200">
+    {/*
+      Skip Navigation Link (WCAG 2.4.1 - Bypass Blocks)
+      - Hidden visually but available to screen readers
+      - Becomes visible when focused (keyboard navigation)
+      - Allows keyboard users to skip repetitive navigation
+    */}
+    <a
+      href="#main-content"
+      class="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-50 focus:px-4 focus:py-2 focus:bg-blue-600 focus:text-white focus:rounded-lg focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+    >
+      Skip to main content
+    </a>
+
+    <div class="flex flex-col min-h-screen">
+      {/* Header landmark - semantic navigation region */}
+      <Header />
+
+      {/* Main content landmark - target for skip link */}
+      <main id="main-content" class="flex-grow" role="main" tabindex="-1">
+        <slot />
+      </main>
+
+      {/* Footer landmark - semantic contentinfo region */}
+      <Footer />
+    </div>
+  </body>
+</html>

@@ -1,0 +1,54 @@
+---
+import { cn } from '../../lib/utils';
+
+/**
+ * Tag Component
+ * A simple badge/tag component for displaying categories, technologies, or labels.
+ *
+ * Features:
+ * - Zero JavaScript - pure HTML/CSS rendered at build time
+ * - Support for multiple color variants
+ * - Compact sizing for inline display
+ */
+
+interface Props {
+  /** Visual color variant */
+  variant?: 'default' | 'primary' | 'secondary' | 'success' | 'warning' | 'info';
+  /** Size preset */
+  size?: 'sm' | 'md';
+  /** Additional CSS classes */
+  class?: string;
+}
+
+const {
+  variant = 'default',
+  size = 'sm',
+  class: className,
+  ...rest
+} = Astro.props;
+---
+
+<span
+  class={cn(
+    // Base styles
+    'inline-flex items-center rounded-full font-medium',
+    // Variant color styles
+    {
+      'bg-gray-100 text-gray-800': variant === 'default',
+      'bg-blue-100 text-blue-800': variant === 'primary',
+      'bg-purple-100 text-purple-800': variant === 'secondary',
+      'bg-green-100 text-green-800': variant === 'success',
+      'bg-yellow-100 text-yellow-800': variant === 'warning',
+      'bg-cyan-100 text-cyan-800': variant === 'info',
+    },
+    // Size styles
+    {
+      'px-2 py-0.5 text-xs': size === 'sm',
+      'px-3 py-1 text-sm': size === 'md',
+    },
+    className
+  )}
+  {...rest}
+>
+  <slot />
+</span>

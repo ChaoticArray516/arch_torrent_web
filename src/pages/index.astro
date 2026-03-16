@@ -1,0 +1,31 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Hero from '../components/sections/Hero.astro';
+import ProjectGrid from '../components/sections/ProjectGrid.astro';
+
+/**
+ * Home Page
+ * The main landing page of the portfolio website.
+ *
+ * Features:
+ * - Uses the main Layout component for consistent structure
+ * - Includes Hero section for introduction
+ * - Includes ProjectGrid section for portfolio showcase
+ * - Fully static with selective hydration for interactive elements
+ */
+---
+
+<Layout
+  title="Home"
+  description="A personal portfolio website built with Astro, featuring zero-JavaScript-first architecture and interactive islands."
+>
+  <Hero
+    title="Hi, I'm a Developer"
+    subtitle="I build fast, accessible, and beautiful web experiences with modern technologies. Passionate about performance and clean code."
+    primaryCtaText="View My Work"
+    primaryCtaHref="#projects"
+    secondaryCtaText="Get in Touch"
+    secondaryCtaHref="#contact"
+  />
+  <ProjectGrid />
+</Layout>
