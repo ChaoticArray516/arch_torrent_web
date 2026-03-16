@@ -54,8 +54,8 @@ const ogImageURL = new URL(ogImage, Astro.site);
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="generator" content={Astro.generator} />
 
-    <!-- Favicon -->
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <!-- Favicon - crossorigin attribute prevents dev server cross-origin warnings -->
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" crossorigin="anonymous" />
 
     <!-- Canonical URL -->
     <link rel="canonical" href={canonicalURL} />
@@ -107,8 +107,8 @@ const ogImageURL = new URL(ogImage, Astro.site);
   <body class="min-h-screen bg-ocean-deep text-star-light transition-colors duration-300">
     {/*
       Cosmic Ocean Background - Layered visual experience
-      - Aurora: Deep sea bioluminescence (-z-20)
-      - Starfield: Canvas-based flowing stars (-z-10)
+      - Aurora: Deep sea bioluminescence (z-0)
+      - Starfield: Canvas-based flowing stars (z-0)
     */}
     <Aurora />
     <Starfield />
@@ -126,7 +126,8 @@ const ogImageURL = new URL(ogImage, Astro.site);
       Skip to main content
     </a>
 
-    <div class="flex flex-col min-h-screen">
+    {/* Content wrapper - z-10 to appear above background layers */}
+    <div class="relative z-10 flex flex-col min-h-screen">
       {/* Header landmark - semantic navigation region */}
       <Header />
 
