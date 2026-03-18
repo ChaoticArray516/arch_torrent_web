@@ -1,16 +1,13 @@
 ---
-import ThemeToggle from '../interactive/ThemeToggle';
-
 /**
  * Header Component
- * Site-wide navigation header with mobile menu support and theme toggle.
+ * Site-wide navigation header with mobile menu support.
  *
  * Features:
  * - Responsive navigation with mobile hamburger menu
- * - Theme toggle integration
  * - Skip to main content link for accessibility
  * - Sticky positioning on scroll
- * - Zero JavaScript (except for theme toggle island)
+ * - Zero JavaScript
  */
 
 // Navigation links
@@ -25,7 +22,7 @@ const navLinks = [
 const currentPath = Astro.url.pathname;
 ---
 
-<header class="sticky top-0 z-50 w-full border-b border-biolume-cyan/20 bg-ocean-abyss/50 backdrop-blur-lg transition-colors duration-300">
+<header class="sticky top-0 z-50 w-full border-b border-sea-surface/20 bg-space-void/70 backdrop-blur-xl">
   <div class="container mx-auto px-4">
     <div class="flex h-16 items-center justify-between">
       {/* Skip to main content - accessibility */}
@@ -37,8 +34,8 @@ const currentPath = Astro.url.pathname;
       </a>
 
       {/* Logo */}
-      <a href="/" class="flex items-center gap-2 text-xl font-bold text-star-light hover:text-biolume-cyan transition-colors duration-300">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-8 h-8 text-biolume-cyan">
+      <a href="/" class="flex items-center gap-2 text-xl font-bold text-text-bright hover:text-sea-surface transition-colors duration-300">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-8 h-8 text-sea-surface">
           <path fill-rule="evenodd" d="M12.963 2.286a.75.75 0 00-1.071-.136 9.742 9.742 0 00-3.539 6.177 7.547 7.547 0 01-1.705-1.715.75.75 0 00-1.152-.082A9 9 0 1015.68 4.534a7.46 7.46 0 01-2.717-2.248zM15.75 14.25a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0z" clip-rule="evenodd" />
         </svg>
         <span class="hidden sm:inline">Portfolio</span>
@@ -53,8 +50,8 @@ const currentPath = Astro.url.pathname;
               href={link.href}
               class={`text-sm font-medium transition-colors duration-300 ${
                 isActive
-                  ? 'text-biolume-cyan'
-                  : 'text-star-dim hover:text-star-light'
+                  ? 'text-sea-surface'
+                  : 'text-text-dim hover:text-text-bright'
               }`}
               aria-current={isActive ? 'page' : undefined}
             >
@@ -64,16 +61,13 @@ const currentPath = Astro.url.pathname;
         })}
       </nav>
 
-      {/* Right side: Theme toggle + Mobile menu button */}
+      {/* Right side: Mobile menu button */}
       <div class="flex items-center gap-2">
-        {/* Theme Toggle - Interactive Island */}
-        <ThemeToggle client:load />
-
         {/* Mobile menu button */}
         <button
           type="button"
           id="mobile-menu-button"
-          class="md:hidden p-2 rounded-lg text-star-dim hover:text-star-light hover:bg-star-light/10 transition-colors duration-300"
+          class="md:hidden p-2 rounded-lg text-text-dim hover:text-text-bright hover:bg-text-bright/10 transition-colors duration-300"
           aria-label="Toggle menu"
           aria-expanded="false"
           aria-controls="mobile-menu"
@@ -91,7 +85,7 @@ const currentPath = Astro.url.pathname;
     {/* Mobile Navigation */}
     <nav
       id="mobile-menu"
-      class="md:hidden hidden border-t border-biolume-cyan/20 py-4"
+      class="md:hidden hidden border-t border-sea-surface/20 py-4"
       aria-label="Mobile navigation"
     >
       <div class="flex flex-col gap-2">
@@ -102,8 +96,8 @@ const currentPath = Astro.url.pathname;
               href={link.href}
               class={`px-4 py-2 rounded-lg text-sm font-medium transition-colors duration-300 ${
                 isActive
-                  ? 'bg-biolume-cyan/20 text-biolume-cyan'
-                  : 'text-star-dim hover:text-star-light hover:bg-star-light/10'
+                  ? 'bg-sea-surface/20 text-sea-surface'
+                  : 'text-text-dim hover:text-text-bright hover:bg-text-bright/10'
               }`}
               aria-current={isActive ? 'page' : undefined}
             >

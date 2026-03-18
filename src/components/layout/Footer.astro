@@ -46,18 +46,18 @@ const legalLinks = [
 ];
 ---
 
-<footer class="border-t border-biolume-cyan/20 bg-ocean-abyss/30 backdrop-blur-lg transition-colors duration-300">
+<footer class="border-t border-sea-surface/20 bg-space-void/50 backdrop-blur-lg">
   <div class="container mx-auto px-4 py-12">
     <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
       {/* Brand column */}
       <div class="md:col-span-2">
-        <a href="/" class="flex items-center gap-2 text-xl font-bold text-star-light hover:text-biolume-cyan transition-colors duration-300 mb-4">
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-8 h-8 text-biolume-cyan">
+        <a href="/" class="flex items-center gap-2 text-xl font-bold text-text-bright hover:text-sea-surface transition-colors duration-300 mb-4">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-8 h-8 text-sea-surface">
             <path fill-rule="evenodd" d="M12.963 2.286a.75.75 0 00-1.071-.136 9.742 9.742 0 00-3.539 6.177 7.547 7.547 0 01-1.705-1.715.75.75 0 00-1.152-.082A9 9 0 1015.68 4.534a7.46 7.46 0 01-2.717-2.248zM15.75 14.25a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0z" clip-rule="evenodd" />
           </svg>
           Portfolio
         </a>
-        <p class="text-star-dim text-sm max-w-sm mb-6">
+        <p class="text-text-dim text-sm max-w-sm mb-6">
           Building fast, accessible, and beautiful web experiences with modern technologies.
           Passionate about performance and user experience.
         </p>
@@ -68,7 +68,7 @@ const legalLinks = [
               href={link.href}
               target="_blank"
               rel="noopener noreferrer"
-              class="text-star-dim hover:text-biolume-cyan transition-colors duration-300"
+              class="magnetic text-text-dim hover:text-sea-surface transition-colors duration-300 p-2 -m-2"
               aria-label={`Follow on ${link.name}`}
             >
               <svg viewBox="0 0 24 24" fill="currentColor" class="w-5 h-5">
@@ -81,13 +81,13 @@ const legalLinks = [
 
       {/* Quick links column */}
       <div>
-        <h3 class="font-semibold text-star-light mb-4">Quick Links</h3>
+        <h3 class="font-semibold text-text-bright mb-4">Quick Links</h3>
         <ul class="space-y-3">
           {quickLinks.map((link) => (
             <li>
               <a
                 href={link.href}
-                class="text-sm text-star-dim hover:text-biolume-cyan transition-colors duration-300"
+                class="text-sm text-text-dim hover:text-sea-surface transition-colors duration-300"
               >
                 {link.label}
               </a>
@@ -98,13 +98,13 @@ const legalLinks = [
 
       {/* Legal links column */}
       <div>
-        <h3 class="font-semibold text-star-light mb-4">Legal</h3>
+        <h3 class="font-semibold text-text-bright mb-4">Legal</h3>
         <ul class="space-y-3">
           {legalLinks.map((link) => (
             <li>
               <a
                 href={link.href}
-                class="text-sm text-star-dim hover:text-biolume-cyan transition-colors duration-300"
+                class="text-sm text-text-dim hover:text-sea-surface transition-colors duration-300"
               >
                 {link.label}
               </a>
@@ -115,13 +115,26 @@ const legalLinks = [
     </div>
 
     {/* Bottom bar */}
-    <div class="mt-12 pt-8 border-t border-biolume-cyan/20 flex flex-col sm:flex-row items-center justify-between gap-4">
-      <p class="text-sm text-star-dim">
+    <div class="mt-12 pt-8 border-t border-sea-surface/20 flex flex-col sm:flex-row items-center justify-between gap-4">
+      <p class="text-sm text-text-dim">
         © {currentYear} Portfolio. All rights reserved.
       </p>
-      <p class="text-sm text-star-dim">
-        Built with <a href="https://astro.build" class="text-biolume-cyan hover:text-biolume-teal transition-colors duration-300 hover:underline">Astro</a> & <a href="https://tailwindcss.com" class="text-biolume-cyan hover:text-biolume-teal transition-colors duration-300 hover:underline">Tailwind CSS</a>
+      <p class="text-sm text-text-dim">
+        Built with <a href="https://astro.build" class="text-sea-surface hover:text-sea-mid transition-colors duration-300 hover:underline">Astro</a> & <a href="https://tailwindcss.com" class="text-sea-surface hover:text-sea-mid transition-colors duration-300 hover:underline">Tailwind CSS</a>
       </p>
     </div>
   </div>
 </footer>
+
+<!-- Gravitational interaction for social links -->
+<script>
+  import { initMagneticElements } from '../../lib/magnetic.js';
+
+  // Initialize magnetic effect on all elements with .magnetic class
+  initMagneticElements('.magnetic', 25);
+
+  // Re-initialize after View Transitions
+  document.addEventListener('astro:after-swap', () => {
+    initMagneticElements('.magnetic', 25);
+  });
+</script>

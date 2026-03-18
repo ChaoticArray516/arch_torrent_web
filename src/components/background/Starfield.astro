@@ -1,20 +1,27 @@
 ---
 /**
- * Starfield Canvas Component - Cosmic Ocean Theme v3.1
+ * Starfield Canvas Component - Galactic Tide Theme v4.0
+ *
+ * Starlight Commentary:
+ * A single-color starfield cannot constitute a "colorful" cosmos. The true galaxy
+ * is filled with stars of different color temperatures. We introduce a color array
+ * containing multiple stellar hues. When initializing each star, we randomly assign
+ * it a color from this palette instead of fixed white. Additionally, we introduce
+ * a "twinkle" animation, giving some stars independent, random flickering cycles,
+ * creating a more vivid, realistic starfield.
  *
  * Engineering Note:
- * The Canvas API is our "warp drive" for rendering thousands of stars efficiently.
+ * The Canvas API remains our "warp drive" for rendering thousands of stars efficiently.
  * Instead of using hundreds of DOM elements that would cause performance "gravitational collapse",
  * we draw all stars on a single canvas, manipulating pixels directly for maximum efficiency.
  * This ensures smooth animation even on lower-end devices.
  */
 ---
 
-<canvas id="starfield-canvas" class="fixed top-0 left-0 w-full h-full z-0"></canvas>
+<canvas id="starfield-canvas" class="fixed top-0 left-0 w-full h-full -z-20 pointer-events-none"></canvas>
 
 <script>
   // Initialize starfield animation on page load
-  // Use astro:page-load for ClientRouter compatibility (fires on initial load and navigation)
   function initStarfield() {
     const canvas = document.getElementById("starfield-canvas") as HTMLCanvasElement;
     if (!canvas) return;
@@ -22,88 +29,81 @@
     const ctx = canvas.getContext("2d");
     if (!ctx) return;
 
+    // v4.0: Colorful starfield color palette
+    const STAR_COLORS = [
+      "#ffffff",  // White
+      "#ffd700",  // Gold
+      "#ff69b4",  // HotPink
+      "#00bfff",  // DeepSkyBlue
+      "#00ffff",  // Cyan
+    ];
+
     interface Star {
       x: number;
       y: number;
-      z: number;
       size: number;
-      opacity: number;
+      color: string;
+      baseAlpha: number;
+      twinkleSpeed: number;
+      twinkleOffset: number;
     }
 
     let stars: Star[] = [];
-    const numStars = 800; // Number of stars, adjustable based on performance
-    const speed = 0.05;   // Star movement speed
+    const numStars = 800; // Star count for good density
 
     function resizeCanvas() {
       canvas.width = window.innerWidth;
       canvas.height = window.innerHeight;
     }
 
-    // Initialize stars with random positions
+    // Initialize stars with random positions and properties
     function initStars() {
       stars = [];
       for (let i = 0; i < numStars; i++) {
         stars.push({
-          x: Math.random() * canvas.width - canvas.width / 2,
-          y: Math.random() * canvas.height - canvas.height / 2,
-          z: Math.random() * canvas.width, // Z-axis depth for parallax simulation
-          size: Math.random() * 2 + 0.5, // Star size
-          opacity: Math.random() * 0.5 + 0.2, // Star opacity
+          x: Math.random() * canvas.width,
+          y: Math.random() * canvas.height,
+          size: Math.random() * 1.5 + 0.5,
+          // v4.0: Randomly assign color from palette
+          color: STAR_COLORS[Math.floor(Math.random() * STAR_COLORS.length)],
+          baseAlpha: Math.random() * 0.5 + 0.4, // Brighter stars
+          twinkleSpeed: Math.random() * 2 + 0.5,
+          twinkleOffset: Math.random() * Math.PI * 2,
         });
       }
     }
+
+    let frame = 0;
 
     // Draw stars on canvas
     function drawStars() {
       if (!ctx) return;
 
-      // Clear canvas with ocean-deep background for trail effect
-      ctx.fillStyle = "rgba(13, 17, 23, 0.3)";
+      // Clear and draw solid background
+      ctx.fillStyle = "#020617";
       ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-      stars.forEach(star => {
-        // Project 3D coordinates to 2D plane
-        const k = 128 / star.z;
-        const px = star.x * k + canvas.width / 2;
-        const py = star.y * k + canvas.height / 2;
+      const time = frame * 0.016; // approximate seconds
 
-        if (px >= 0 && px <= canvas.width && py >= 0 && py <= canvas.height) {
-          const size = star.size * k;
-          // Use star-light color with star's own opacity
-          const alpha = Math.min(star.opacity * k * 0.5, 1);
-          ctx.fillStyle = `rgba(230, 237, 243, ${alpha})`;
-          ctx.beginPath();
-          ctx.arc(px, py, Math.max(size / 2, 0.5), 0, Math.PI * 2);
-          ctx.fill();
+      stars.forEach((star, i) => {
+        // Calculate twinkle
+        const twinkle = Math.sin(time * star.twinkleSpeed + star.twinkleOffset) * 0.5 + 0.5;
+        const alpha = star.baseAlpha * (0.6 + twinkle * 0.4);
 
-          // Add glow effect for brighter stars
-          if (alpha > 0.6) {
-            ctx.fillStyle = `rgba(51, 187, 197, ${alpha * 0.3})`;
-            ctx.beginPath();
-            ctx.arc(px, py, Math.max(size, 1), 0, Math.PI * 2);
-            ctx.fill();
-          }
-        }
+        ctx.fillStyle = star.color;
+        ctx.globalAlpha = alpha;
+        ctx.beginPath();
+        ctx.arc(star.x, star.y, star.size, 0, Math.PI * 2);
+        ctx.fill();
       });
-    }
 
-    // Update star positions to create flow effect
-    function updateStars() {
-      stars.forEach(star => {
-        star.z -= speed;
-        if (star.z <= 0) {
-          // Reset star position when it moves out of view
-          star.z = canvas.width;
-          star.x = Math.random() * canvas.width - canvas.width / 2;
-          star.y = Math.random() * canvas.height - canvas.height / 2;
-        }
-      });
+      ctx.globalAlpha = 1;
     }
 
     // Animation loop
     function animate() {
-      updateStars();
       drawStars();
+      frame++;
       requestAnimationFrame(animate);
     }
 
@@ -118,11 +118,6 @@
     animate();
   }
 
-  // Initialize immediately if DOM is ready, otherwise wait for astro:page-load
-  if (document.readyState === 'loading') {
-    document.addEventListener("astro:page-load", initStarfield);
-  } else {
-    // DOM already loaded, initialize immediately
-    initStarfield();
-  }
+  // Initialize immediately - this script is a module and runs after DOM is ready
+  initStarfield();
 </script>

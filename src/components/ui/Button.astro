@@ -20,6 +20,8 @@ interface Props {
   size?: 'sm' | 'md' | 'lg';
   /** Optional href - when provided, renders as <a> tag */
   href?: string;
+  /** Enable magnetic/gravitational hover effect */
+  magnetic?: boolean;
   /** Additional CSS classes */
   class?: string;
 }
@@ -28,6 +30,7 @@ const {
   variant = 'primary',
   size = 'md',
   href,
+  magnetic = false,
   class: className,
   ...rest
 } = Astro.props;
@@ -39,21 +42,24 @@ const Tag = href ? 'a' : 'button';
 
 <Tag
   href={href}
+  data-magnetic={magnetic ? 'true' : undefined}
   class={cn(
     // Base styles
     'inline-flex items-center justify-center rounded-lg font-medium transition-all duration-300',
-    'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-offset-ocean-deep',
+    // Magnetic effect class
+    magnetic && 'will-change-transform',
+    'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-offset-space-void',
     'disabled:pointer-events-none disabled:opacity-50',
-    // Variant styles - Cosmic Ocean theme
+    // Variant styles - Galactic Tide theme
     {
-      // Primary: Bioluminescent glow button
-      'bg-biolume-cyan text-ocean-deep hover:bg-biolume-teal focus-visible:ring-biolume-cyan shadow-[0_0_15px_rgba(51,187,197,0.3)] hover:shadow-[0_0_25px_rgba(133,230,197,0.5)]': variant === 'primary',
-      // Secondary: Nebula blue subtle button
-      'bg-nebula-blue/20 text-nebula-blue hover:bg-nebula-blue/30 focus-visible:ring-nebula-blue border border-nebula-blue/30': variant === 'secondary',
+      // Primary: Ocean blue with violet nebula glow
+      'bg-sea-mid text-text-bright hover:bg-sea-deep focus-visible:ring-sea-surface shadow-[0_0_15px_var(--color-sea-mid)] hover:shadow-[0_0_25px_var(--color-nebula-violet)]': variant === 'primary',
+      // Secondary: Sea blue subtle button
+      'bg-sea-surface/20 text-sea-surface hover:bg-sea-surface/30 focus-visible:ring-sea-surface border border-sea-surface/30': variant === 'secondary',
       // Ghost: Transparent with hover effect
-      'text-star-dim hover:bg-star-light/10 hover:text-star-light focus-visible:ring-star-light': variant === 'ghost',
-      // Outline: Energy ring effect
-      'border border-star-dim/50 bg-transparent text-star-dim hover:bg-star-dim/10 hover:text-star-light hover:border-star-light hover:shadow-[0_0_15px_rgba(230,237,243,0.1)] focus-visible:ring-star-light': variant === 'outline',
+      'text-text-dim hover:bg-text-bright/10 hover:text-text-bright focus-visible:ring-text-bright': variant === 'ghost',
+      // Outline: Stardust border with sea blue hover
+      'border border-text-dim/50 bg-transparent text-text-dim hover:bg-sea-surface/10 hover:text-text-bright hover:border-sea-surface hover:shadow-[0_0_15px_rgba(0,191,255,0.1)] focus-visible:ring-text-bright': variant === 'outline',
     },
     // Size styles
     {
@@ -67,3 +73,24 @@ const Tag = href ? 'a' : 'button';
 >
   <slot />
 </Tag>
+
+{/* Initialize magnetic effect for buttons with magnetic prop */}
+{magnetic && (
+  <script>
+    import { applyMagneticEffect } from '../../lib/magnetic.js';
+
+    // Apply to this specific button instance
+    const buttons = document.querySelectorAll('[data-magnetic="true"]');
+    buttons.forEach((btn) => {
+      applyMagneticEffect(btn as HTMLElement, 20);
+    });
+
+    // Re-apply after View Transitions
+    document.addEventListener('astro:after-swap', () => {
+      const buttons = document.querySelectorAll('[data-magnetic="true"]');
+      buttons.forEach((btn) => {
+        applyMagneticEffect(btn as HTMLElement, 20);
+      });
+    });
+  </script>
+)}

@@ -1,14 +1,21 @@
 ---
 import { getCollection, render } from 'astro:content';
 import Layout from '../../layouts/Layout.astro';
+import CodeBlock from '../../components/mdx/CodeBlock.astro';
+import Blockquote from '../../components/mdx/Blockquote.astro';
 
 /**
- * Blog Post Detail Page (Dynamic Route)
+ * Blog Post Detail Page (Dynamic Route) - Galactic Tide Theme v4.0
  * Renders individual blog posts using Astro's content collections.
+ *
+ * Starlight Commentary:
+ * Blog posts are records of exploration discoveries - "Interstellar Logs."
+ * We inject Galactic Tide visual elements: code blocks become "data streams"
+ * from ship consoles, blockquotes become "Captain's Log" excerpts.
  *
  * Features:
  * - Static path generation at build time via getStaticPaths
- * - MDX content rendering with custom components
+ * - MDX content rendering with custom Galactic Tide themed components
  * - Publication date and tags display
  * - Back navigation to blog index
  *
@@ -33,6 +40,12 @@ const { post } = Astro.props;
 // Render the MDX content using Astro v6 Content Layer API
 const { Content } = await render(post);
 
+// Custom MDX components for Galactic Tide theme
+const components = {
+  pre: CodeBlock,
+  blockquote: Blockquote,
+};
+
 // Format date for display
 const formatDate = (date: Date): string => {
   return new Intl.DateTimeFormat('en-US', {
@@ -51,7 +64,7 @@ const formatDate = (date: Date): string => {
     {/* Back Navigation */}
     <a
       href="/blog/"
-      class="inline-flex items-center text-sm font-medium text-star-dim hover:text-biolume-cyan transition-colors duration-300 mb-8"
+      class="inline-flex items-center text-sm font-medium text-text-dim hover:text-sea-surface transition-colors duration-300 mb-8"
     >
       <svg
         xmlns="http://www.w3.org/2000/svg"
@@ -73,19 +86,19 @@ const formatDate = (date: Date): string => {
       {/* Tags */}
       <div class="flex flex-wrap gap-2 mb-4">
         {post.data.tags.map((tag) => (
-          <span class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-biolume-cyan/20 text-biolume-cyan border border-biolume-cyan/30">
+          <span class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-sea-surface/20 text-sea-surface border border-sea-surface/30">
             {tag}
           </span>
         ))}
       </div>
 
       {/* Title */}
-      <h1 class="text-3xl md:text-4xl lg:text-5xl font-bold text-star-light tracking-tight mb-4">
+      <h1 class="text-3xl md:text-4xl lg:text-5xl font-bold text-text-bright tracking-tight mb-4">
         {post.data.title}
       </h1>
 
       {/* Publication Date */}
-      <div class="flex items-center text-star-dim">
+      <div class="flex items-center text-text-dim">
         <svg
           xmlns="http://www.w3.org/2000/svg"
           viewBox="0 0 20 20"
@@ -105,15 +118,15 @@ const formatDate = (date: Date): string => {
     </header>
 
     {/* Post Content */}
-    <div class="prose prose-lg prose-invert prose-biolume max-w-none">
-      <Content />
+    <div class="prose prose-lg prose-invert prose-galactic max-w-none">
+      <Content components={components} />
     </div>
 
     {/* Post Footer */}
-    <footer class="mt-16 pt-8 border-t border-star-light/10">
+    <footer class="mt-16 pt-8 border-t border-text-bright/10">
       <a
         href="/blog/"
-        class="inline-flex items-center text-sm font-medium text-biolume-cyan hover:text-biolume-teal transition-colors duration-300"
+        class="inline-flex items-center text-sm font-medium text-sea-surface hover:text-sea-mid transition-colors duration-300"
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"

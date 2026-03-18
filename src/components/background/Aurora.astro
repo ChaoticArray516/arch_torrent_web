@@ -1,30 +1,49 @@
 ---
 /**
- * Aurora Background Component - Cosmic Ocean Theme v3.1
+ * Aurora Background Component - Galactic Tide Theme v4.0
+ *
+ * Starlight Commentary:
+ * Monotonous auroras cannot embody the grandeur and flux of "tidal" motion.
+ * We upgrade Aurora.astro into a multi-layered, asynchronous, color-rich system.
+ * Three independent div layers, each applying different aurora-flow animations
+ * defined in global.css. Each layer consists of multiple radial-gradients with
+ * varying colors and sizes. This layered, asynchronous animation, combined with
+ * richer color palettes, creates a truly organic, flowing, never-repeating
+ * aurora tidal effect.
  *
  * Engineering Note:
- * Pure CSS background animation creates the breathing aurora effect.
- * Multiple large, blurred radial-gradients serve as background layers,
- * driven by @keyframes to move slowly and organically.
- * This achieves an ever-changing, living light effect with minimal performance cost.
- *
- * -z-20 ensures aurora stays behind the starfield canvas (-z-10)
- * opacity-50 dark:opacity-30 makes aurora softer in light mode, subtler in dark mode
+ * -z-10 places the aurora above the starfield (-z-20), creating a foreground glow.
+ * The three divs represent distinct color and motion layers. They use different
+ * animations (aurora-flow-1/2/3) and durations (80s, 70s, 60s). This asynchrony
+ * is key to creating organic visual rhythm.
  */
 ---
 
-<div
-  aria-hidden="true"
-  class="fixed top-0 left-0 w-full h-full z-0 opacity-50 dark:opacity-30 pointer-events-none"
->
+<div aria-hidden="true" class="fixed top-0 left-0 w-full h-full -z-10 opacity-60 dark:opacity-40 pointer-events-none">
+  <!-- Layer 1: Base Sea Tones -->
   <div
-    class="absolute inset-0 animate-aurora"
-    style="
-      background-image:
-        radial-gradient(ellipse 100% 100% at 50% 50%, rgba(130, 80, 223, 0.3), rgba(13, 17, 23, 0)),
-        radial-gradient(ellipse 100% 100% at 50% 50%, rgba(51, 187, 197, 0.3), rgba(13, 17, 23, 0));
-      background-size: 200% 200%;
-    "
-  >
-  </div>
+    class="absolute inset-0"
+    style="background-image:
+      radial-gradient(ellipse at 70% 20%, var(--color-sea-surface) 0%, transparent 50%),
+      radial-gradient(ellipse at 30% 80%, var(--color-sea-deep) 0%, transparent 50%);
+      animation: aurora-flow-1 80s linear infinite;"
+  ></div>
+
+  <!-- Layer 2: Nebula & Stardust Accents -->
+  <div
+    class="absolute inset-0"
+    style="background-image:
+      radial-gradient(ellipse at 40% 40%, var(--color-nebula-magenta) 0%, transparent 40%),
+      radial-gradient(ellipse at 80% 60%, var(--color-nebula-violet) 0%, transparent 40%);
+      animation: aurora-flow-2 70s linear infinite;"
+  ></div>
+
+  <!-- Layer 3: Biolume & Gold Highlights -->
+  <div
+    class="absolute inset-0"
+    style="background-image:
+      radial-gradient(circle at 10% 10%, var(--color-stardust-gold) 0%, transparent 30%),
+      radial-gradient(circle at 90% 90%, var(--color-biolume-aqua) 0%, transparent 30%);
+      animation: aurora-flow-3 60s linear infinite;"
+  ></div>
 </div>

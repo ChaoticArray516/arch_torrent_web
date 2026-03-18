@@ -3,8 +3,12 @@ import { getCollection } from 'astro:content';
 import Layout from '../../layouts/Layout.astro';
 
 /**
- * Blog Index Page
+ * Blog Index Page - Galactic Tide Theme v4.0
  * Displays a list of all blog posts from the content collection.
+ *
+ * Starlight Commentary:
+ * The blog index lists all "Interstellar Logs" - chronicles from the digital cosmos.
+ * Each post card is styled to look like a data transmission from deep space.
  *
  * Features:
  * - Server-side fetching of blog posts at build time
@@ -36,10 +40,10 @@ const formatDate = (date: Date): string => {
   <section class="container mx-auto px-4 py-20">
     {/* Page Header */}
     <div class="text-center mb-16">
-      <h1 class="text-4xl md:text-5xl font-bold tracking-tight text-star-light mb-4">
+      <h1 class="text-4xl md:text-5xl font-bold tracking-tight text-text-bright mb-4">
         Interstellar Logs
       </h1>
-      <p class="text-lg text-star-dim max-w-2xl mx-auto">
+      <p class="text-lg text-text-dim max-w-2xl mx-auto">
         Chronicles from the digital cosmos - thoughts on web development, engineering, and technology.
       </p>
     </div>
@@ -48,42 +52,42 @@ const formatDate = (date: Date): string => {
     {posts.length > 0 ? (
       <div class="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
         {posts.map((post) => (
-          <article class="group flex flex-col overflow-hidden rounded-xl border border-star-light/10 bg-ocean-abyss/30 backdrop-blur-md shadow-lg transition-all duration-300 hover:border-biolume-cyan/50 hover:shadow-[0_0_30px_rgba(51,187,197,0.2)] hover:-translate-y-2">
+          <article class="group flex flex-col overflow-hidden rounded-xl border border-text-bright/10 bg-space-ink/50 backdrop-blur-md shadow-lg transition-all duration-300 hover:border-sea-surface/50 hover:shadow-[0_0_30px_rgba(0,191,255,0.2)] hover:-translate-y-2">
             {/* Post Link Wrapper */}
             <a href={`/blog/${post.id}/`} class="flex flex-col flex-grow p-6">
               {/* Post Meta */}
-              <div class="flex items-center gap-2 text-sm text-star-dim mb-3">
+              <div class="flex items-center gap-2 text-sm text-text-dim mb-3">
                 <time datetime={post.data.publishedAt.toISOString()}>
                   {formatDate(post.data.publishedAt)}
                 </time>
               </div>
 
               {/* Post Title */}
-              <h2 class="text-xl font-semibold text-star-light mb-3 group-hover:text-biolume-cyan transition-colors duration-300">
+              <h2 class="text-xl font-semibold text-text-bright mb-3 group-hover:text-sea-surface transition-colors duration-300">
                 {post.data.title}
               </h2>
 
               {/* Post Summary */}
-              <p class="text-star-dim line-clamp-3 mb-4 flex-grow">
+              <p class="text-text-dim line-clamp-3 mb-4 flex-grow">
                 {post.data.summary}
               </p>
 
               {/* Tags */}
               <div class="flex flex-wrap gap-2 mt-auto">
                 {post.data.tags.slice(0, 3).map((tag) => (
-                  <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-biolume-cyan/20 text-biolume-cyan border border-biolume-cyan/30">
+                  <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-sea-surface/20 text-sea-surface border border-sea-surface/30">
                     {tag}
                   </span>
                 ))}
                 {post.data.tags.length > 3 && (
-                  <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-star-light/10 text-star-dim border border-star-light/20">
+                  <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-text-bright/10 text-text-dim border border-text-bright/20">
                     +{post.data.tags.length - 3}
                   </span>
                 )}
               </div>
 
               {/* Read More Link */}
-              <div class="mt-4 flex items-center text-sm font-medium text-biolume-cyan group-hover:text-biolume-teal transition-colors duration-300">
+              <div class="mt-4 flex items-center text-sm font-medium text-sea-surface group-hover:text-sea-mid transition-colors duration-300">
                 Read transmission
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -105,7 +109,7 @@ const formatDate = (date: Date): string => {
     ) : (
       /* Empty State */
       <div class="text-center py-16">
-        <p class="text-star-dim">No transmissions recorded yet. Check back soon!</p>
+        <p class="text-text-dim">No transmissions recorded yet. Check back soon!</p>
       </div>
     )}
   </section>

@@ -2,8 +2,14 @@ import { useStore } from '@nanostores/react';
 import { selectedCategory } from '../../lib/store';
 
 /**
- * ProjectFilter Component - Cosmic Ocean Theme
+ * ProjectFilter Component - Galactic Tide Theme v4.0
  * Interactive "Deep Space Scanner" for project categories.
+ *
+ * Starlight Commentary:
+ * Filtering should feel like operating a "Deep Space Scanner" on the bridge.
+ * Selected buttons emit a continuous glow like a locked signal source;
+ * hover states with subtle float and color changes simulate physical
+ * feedback from operating tangible controls.
  *
  * Engineering Note:
  * Uses Nano Stores like "quantum entanglement" to share state
@@ -22,8 +28,11 @@ export default function ProjectFilter({ categories }: Props) {
 
   // Format category for display (capitalize first letter)
   const formatCategory = (cat: string): string => {
-    if (cat === 'all') return 'All';
+    if (cat === 'all') return 'All Galaxies';
     if (cat === 'open-source') return 'Open Source';
+    if (cat === 'web') return 'Web';
+    if (cat === 'mobile') return 'Mobile';
+    if (cat === 'tool') return 'Tools';
     return cat.charAt(0).toUpperCase() + cat.slice(1);
   };
 
@@ -41,11 +50,11 @@ export default function ProjectFilter({ categories }: Props) {
           aria-selected={$category === cat}
           className={`
             px-4 py-2 rounded-full text-sm font-medium transition-all duration-300
-            focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-biolume-cyan focus-visible:ring-offset-2 focus-visible:ring-offset-ocean-deep
+            focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-sea-surface focus-visible:ring-offset-2 focus-visible:ring-offset-space-void
             ${
               $category === cat
-                ? 'bg-biolume-cyan text-ocean-deep shadow-[0_0_15px_rgba(51,187,197,0.4)]'
-                : 'bg-ocean-abyss/50 text-star-dim border border-star-light/20 hover:border-biolume-cyan/50 hover:text-star-light backdrop-blur-sm'
+                ? 'bg-sea-surface text-space-void shadow-[0_0_20px_var(--color-sea-surface)]'
+                : 'bg-space-ink/50 text-text-dim hover:bg-space-ink hover:text-text-bright'
             }
           `}
         >

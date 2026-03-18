@@ -7,17 +7,25 @@ import Aurora from '../components/background/Aurora.astro';
 import { ClientRouter } from 'astro:transitions';
 
 /**
- * Layout Component (v2.0) - SEO + A11y Enhanced
+ * Layout Component - Galactic Tide Theme v4.0
  * The main layout wrapper for all pages in the portfolio website.
+ *
+ * Starlight Commentary:
+ * A ship invisible to interstellar traffic control (search engines) or
+ * inaccessible to certain crew members (visitors with disabilities) is but
+ * a splendid isolation. SEO optimization is our "hyperspace beacon," ensuring
+ * search engines correctly index our coordinates. WCAG accessibility standards
+ * serve as our "universal translator," ensuring all users can navigate our cosmos.
  *
  * Features:
  * - Comprehensive SEO meta tags with Astro.url and Astro.site
  * - Open Graph and Twitter Card support for social sharing
  * - Canonical URLs for SEO
- * - ViewTransitions for smooth SPA-like page navigation
+ * - Hyperspace ViewTransitions for SPA-like navigation
  * - Dark mode support with inline theme script
  * - Accessibility: Skip navigation link (WCAG 2.4.1)
- * - Accessibility: Semantic HTML landmarks
+ * - Accessibility: Semantic HTML landmarks and ARIA labels
+ * - Accessibility: prefers-reduced-motion support (STEP-13)
  */
 
 interface Props {
@@ -47,7 +55,7 @@ const ogImageURL = new URL(ogImage, Astro.site);
 ---
 
 <!doctype html>
-<html lang="en" class="scroll-smooth">
+<html lang="en" class="scroll-smooth dark">
   <head>
     <meta charset="UTF-8" />
     <meta name="description" content={description} />
@@ -75,40 +83,16 @@ const ogImageURL = new URL(ogImage, Astro.site);
     <meta name="twitter:description" content={description} />
     <meta name="twitter:image" content={ogImageURL} />
 
-    <!-- Theme initialization script - inline to prevent flash (v2.0) -->
-    <!-- This script runs before any CSS to set the correct theme class -->
-    <!-- Note: Does NOT write to localStorage (handled by client component) -->
-    <script is:inline>
-      (function() {
-        const theme = (() => {
-          if (typeof localStorage !== 'undefined' && localStorage.getItem('theme')) {
-            return localStorage.getItem('theme');
-          }
-          if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
-            return 'dark';
-          }
-          return 'light';
-        })();
-
-        if (theme === 'light') {
-          document.documentElement.classList.remove('dark');
-        } else {
-          document.documentElement.classList.add('dark');
-        }
-        // localStorage persistence handled by ThemeToggle client component
-      })();
-    </script>
-
     <title>{fullTitle}</title>
 
     <!-- View Transitions for SPA-like navigation -->
     <ClientRouter />
   </head>
-  <body class="min-h-screen bg-ocean-deep text-star-light transition-colors duration-300">
+  <body class="min-h-screen bg-transparent text-text-bright">
     {/*
-      Cosmic Ocean Background - Layered visual experience
-      - Aurora: Deep sea bioluminescence (z-0)
-      - Starfield: Canvas-based flowing stars (z-0)
+      Galactic Tide Background - Layered cosmic visual experience
+      - Aurora: Multi-layered tidal aurora (-z-10)
+      - Starfield: Colorful canvas-based flowing stars (-z-20)
     */}
     <Aurora />
     <Starfield />
@@ -121,7 +105,7 @@ const ogImageURL = new URL(ogImage, Astro.site);
     */}
     <a
       href="#main-content"
-      class="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-50 focus:px-4 focus:py-2 focus:bg-biolume-cyan focus:text-ocean-deep focus:rounded-lg focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-biolume-cyan"
+      class="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-50 focus:px-4 focus:py-2 focus:bg-sea-surface focus:text-space-void focus:rounded-lg focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-sea-surface"
     >
       Skip to main content
     </a>

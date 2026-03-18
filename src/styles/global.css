@@ -1,23 +1,25 @@
 /**
- * Global Styles - Cosmic Ocean Theme v3.1
- * Tailwind CSS v4 configuration with Cosmic Ocean color palette.
+ * Global Styles - Galactic Tide Theme v4.0
+ * Tailwind CSS v4 configuration with Galactic Tide color spectrum.
  *
  * Features:
  * - Tailwind CSS v4 with @import
- * - Cosmic Ocean color system (deep ocean, starlight, bioluminescence, nebula)
+ * - Galactic Tide color spectrum (deep space, galactic sea, stardust, nebula)
+ * - Multi-layered animation physics for organic motion
  * - Dark mode support via class strategy
  * - Responsive design utilities
  *
  * Engineering Note:
- * The color palette defines the "physical constants" of our universe.
- * All colors are tuned to create a deep, serene yet vibrant visual experience
- * reminiscent of floating in deep space above a bioluminescent ocean.
+ * This color spectrum defines the "physical laws" of our new universe.
+ * Abandoning limited color options, we establish a layered, rich color library.
+ * Multiple asynchronous animation keyframes give each visual element
+ * its own independent lifecycle, creating truly organic dynamism.
  */
 
 /* Import Tailwind CSS */
 @import "tailwindcss";
 
-/* Theme configuration for Tailwind v4 - Cosmic Ocean Color System */
+/* Theme configuration for Tailwind v4 - Galactic Tide Color System v4.0 */
 @theme {
   /* Container settings */
   --container-center: true;
@@ -25,55 +27,89 @@
   --container-max-width-2xl: 1400px;
 
   /* ============================================
-     COSMIC OCEAN COLOR PALETTE
+     GALACTIC TIDE COLOR SPECTRUM (v4.0)
      ============================================ */
 
-  /* Deep Ocean Background Colors (replaces gray-900) */
-  --color-ocean-deep: #0D1117;      /* RGB(13, 17, 23) - Layered deep space black */
-  --color-ocean-abyss: #010409;     /* RGB(1, 4, 9) - Deepest background, almost pure black */
+  /* 1. Deep Space & Base Text */
+  --color-space-void: #020617;      /* RGB(2, 6, 23) - Deeper, subtly blue-tinged void black */
+  --color-space-ink: #0f172a;       /* RGB(15, 23, 42) - Ink black for UI panels */
+  --color-text-bright: #f8fafc;     /* RGB(248, 250, 252) - Bright yet gentle starlight white */
+  --color-text-dim: #94a3b8;        /* RGB(148, 163, 184) - Stardust gray for secondary text */
 
-  /* Starlight & Text Colors (replaces gray-100/white) */
-  --color-star-light: #E6EDF3;      /* RGB(230, 237, 243) - Gentle starlight white, not harsh */
-  --color-star-dim: #8B949E;        /* RGB(139, 148, 158) - Dim star color for secondary text */
+  /* 2. Galactic Sea Blues (Ocean Blue Hierarchy) */
+  --color-sea-surface: #00bfff;    /* RGB(0, 191, 255) - Bright surface ocean blue (DeepSkyBlue) */
+  --color-sea-mid: #1e90ff;       /* RGB(30, 144, 255) - Mid-layer ocean blue (DodgerBlue) */
+  --color-sea-deep: #4169e1;      /* RGB(65, 105, 225) - Deep ocean blue (RoyalBlue) */
+  --color-sea-abyss: #00008b;     /* RGB(0, 0, 139) - Abyssal ocean blue (DarkBlue) */
 
-  /* Bioluminescence & Aurora Colors (core accent & interactive colors) */
-  --color-biolume-cyan: #33BBC5;    /* RGB(51, 187, 197) - Bright bioluminescent cyan */
-  --color-biolume-teal: #85E6C5;    /* RGB(133, 230, 197) - Soft underwater glow */
-  --color-biolume-lime: #C8F560;    /* RGB(200, 245, 96) - Vital fluorescent green */
-
-  /* Nebula & Interactive Colors (replaces blue/purple) */
-  --color-nebula-purple: #8250DF;   /* RGB(130, 80, 223) - Mysterious nebula purple */
-  --color-nebula-pink: #C5559F;     /* RGB(197, 85, 159) - Soft pink stardust */
-  --color-nebula-blue: #4A90E2;     /* RGB(74, 144, 226) - Cosmic blue for links/highlights */
+  /* 3. Stardust & Nebula Accents (Stardust & Nebula Accent Colors) */
+  --color-stardust-gold: #ffd700;   /* RGB(255, 215, 0) - Fiery golden stardust */
+  --color-stardust-red: #ff4500;    /* RGB(255, 69, 0) - Red giant orange-red */
+  --color-nebula-magenta: #ff00ff; /* RGB(255, 0, 255) - Vibrant magenta nebula */
+  --color-nebula-violet: #9400d3;  /* RGB(148, 0, 211) - Mysterious violet nebula */
+  --color-biolume-aqua: #00ffff;   /* RGB(0, 255, 255) - Classic bioluminescent aqua */
 
   /* ============================================
-     ANIMATION KEYFRAMES
+     GALACTIC TIDE ANIMATION PHYSICS (v4.0)
      ============================================ */
 
-  /* Aurora animation - flowing organic light effect */
-  --animate-aurora: aurora 60s linear infinite;
-
-  /* Fade in up animation - text entrance */
-  --animate-fade-in-up: fadeInUp 1s ease-out forwards;
-
-  @keyframes aurora {
-    from {
-      background-position: 50% 50%, 50% 50%;
-    }
-    to {
-      background-position: 350% 50%, 350% 50%;
-    }
+  /* 1. Multi-Layered Aurora Keyframes */
+  @keyframes aurora-flow-1 {
+    0% { transform: translate(0%, 0%) rotate(0deg); }
+    50% { transform: translate(20%, -30%) rotate(15deg); }
+    100% { transform: translate(0%, 0%) rotate(0deg); }
+  }
+  @keyframes aurora-flow-2 {
+    0% { transform: translate(0%, 0%) rotate(0deg); }
+    50% { transform: translate(-25%, 35%) rotate(-20deg); }
+    100% { transform: translate(0%, 0%) rotate(0deg); }
+  }
+  @keyframes aurora-flow-3 {
+    0% { transform: translate(0%, 0%) scale(1); }
+    50% { transform: translate(10%, 15%) scale(1.2); }
+    100% { transform: translate(0%, 0%) scale(1); }
   }
 
+  /* 2. Star Twinkle Keyframe */
+  @keyframes star-twinkle {
+    0%, 100% { opacity: var(--star-opacity, 0.2); }
+    50% { opacity: 1; }
+  }
+
+  /* 3. Shooting Star Keyframe */
+  @keyframes shooting-star {
+    0% { transform: translateX(0) translateY(0); opacity: 1; }
+    100% { transform: translateX(var(--tx)) translateY(var(--ty)); opacity: 0; }
+  }
+
+  /* 4. Text Gradient Flow Keyframe */
+  @keyframes text-gradient-flow {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+  }
+
+  /* 5. Border Flow Keyframe */
+  @keyframes border-flow {
+    from { background-position: 0 0; }
+    to { background-position: 200% 0; }
+  }
+
+  /* 6. Hyperspace Transition Keyframes */
+  @keyframes hyperspace-out {
+    from { opacity: 1; transform: scale(1); }
+    to { opacity: 0; transform: scale(1.5); filter: blur(10px); }
+  }
+  @keyframes hyperspace-in {
+    from { opacity: 0; transform: scale(0.8); filter: blur(10px); }
+    to { opacity: 1; transform: scale(1); filter: blur(0px); }
+  }
+
+  /* 7. Base Animations */
+  --animate-fade-in-up: fadeInUp 1s ease-out forwards;
   @keyframes fadeInUp {
-    from {
-      opacity: 0;
-      transform: translateY(20px);
-    }
-    to {
-      opacity: 1;
-      transform: translateY(0);
-    }
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
   }
 }
 
@@ -85,26 +121,16 @@
    THEME MODES
    ============================================ */
 
-/* Default dark mode - The Cosmic Ocean experience */
+/* Galactic Tide - Always Dark Mode */
+/* html/body backgrounds are transparent to allow canvas starfield to show through */
 html {
-  background-color: var(--color-ocean-deep);
-  color: var(--color-star-light);
+  background-color: transparent;
+  color: var(--color-text-bright);
 }
 
-html.dark {
-  background-color: var(--color-ocean-deep);
-  color: var(--color-star-light);
-}
-
-/* Light mode override */
-html:not(.dark) {
-  background-color: var(--color-star-light);
-  color: var(--color-ocean-deep);
-}
-
-/* Ensure body inherits background */
+/* Ensure body is transparent to show canvas starfield */
 body {
-  background-color: inherit;
+  background-color: transparent;
   color: inherit;
   min-height: 100vh;
   transition: background-color 0.3s ease, color 0.3s ease;
@@ -132,10 +158,10 @@ body {
   }
 }
 
-/* Selection styling - bioluminescent glow */
+/* Selection styling - Galactic Tide glow */
 ::selection {
-  background-color: rgba(51, 187, 197, 0.3);
-  color: var(--color-star-light);
+  background-color: rgba(0, 255, 255, 0.3);
+  color: var(--color-text-bright);
 }
 
 /* Scrollbar styling for webkit browsers */
@@ -145,107 +171,159 @@ body {
 }
 
 ::-webkit-scrollbar-track {
-  background: var(--color-ocean-abyss);
+  background: var(--color-space-ink);
 }
 
 ::-webkit-scrollbar-thumb {
-  background: var(--color-star-dim);
+  background: var(--color-text-dim);
   border-radius: 4px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: var(--color-biolume-cyan);
+  background: var(--color-biolume-aqua);
 }
 
 /* ============================================
-   PROSE STYLES - Cosmic Ocean Theme for Blog Content
+   PROSE STYLES - Galactic Tide Theme for Blog Content
    ============================================ */
 
-/* Custom prose theme for bioluminescent blog content */
-.prose-biolume {
+/* Custom prose theme for Galactic Tide blog content */
+.prose-galactic {
   /* Headings */
-  --tw-prose-headings: var(--color-star-light);
-  --tw-prose-lead: var(--color-star-dim);
-  --tw-prose-links: var(--color-biolume-cyan);
-  --tw-prose-bold: var(--color-star-light);
-  --tw-prose-counters: var(--color-star-dim);
-  --tw-prose-bullets: var(--color-biolume-cyan);
-  --tw-prose-hr: rgba(139, 148, 158, 0.2);
-  --tw-prose-quotes: var(--color-star-dim);
-  --tw-prose-quote-borders: var(--color-nebula-purple);
-  --tw-prose-captions: var(--color-star-dim);
-  --tw-prose-kbd: var(--color-star-light);
+  --tw-prose-headings: var(--color-text-bright);
+  --tw-prose-lead: var(--color-text-dim);
+  --tw-prose-links: var(--color-sea-surface);
+  --tw-prose-bold: var(--color-text-bright);
+  --tw-prose-counters: var(--color-text-dim);
+  --tw-prose-bullets: var(--color-biolume-aqua);
+  --tw-prose-hr: rgba(148, 163, 184, 0.2);
+  --tw-prose-quotes: var(--color-text-dim);
+  --tw-prose-quote-borders: var(--color-nebula-violet);
+  --tw-prose-captions: var(--color-text-dim);
+  --tw-prose-kbd: var(--color-text-bright);
   --tw-prose-kbd-shadows: rgba(0, 0, 0, 0.3);
-  --tw-prose-code: var(--color-biolume-teal);
-  --tw-prose-pre-code: var(--color-star-light);
-  --tw-prose-pre-bg: rgba(1, 4, 9, 0.8);
-  --tw-prose-th-borders: rgba(139, 148, 158, 0.3);
-  --tw-prose-td-borders: rgba(139, 148, 158, 0.2);
+  --tw-prose-code: var(--color-sea-mid);
+  --tw-prose-pre-code: var(--color-text-bright);
+  --tw-prose-pre-bg: rgba(15, 23, 42, 0.8);
+  --tw-prose-th-borders: rgba(148, 163, 184, 0.3);
+  --tw-prose-td-borders: rgba(148, 163, 184, 0.2);
 }
 
-/* Blockquote styling - Cosmic Ocean theme */
-.prose-biolume blockquote {
-  background: rgba(130, 80, 223, 0.1);
-  border-left: 4px solid var(--color-nebula-purple);
+/* Blockquote styling - Galactic Tide theme */
+.prose-galactic blockquote {
+  background: rgba(148, 0, 211, 0.1);
+  border-left: 4px solid var(--color-nebula-violet);
   border-radius: 0 8px 8px 0;
   padding: 1rem 1.5rem;
   font-style: italic;
-  box-shadow: 0 0 20px rgba(130, 80, 223, 0.1);
+  box-shadow: 0 0 20px rgba(148, 0, 211, 0.1);
 }
 
 /* Code blocks - Data Stream styling */
-.prose-biolume pre {
-  background: var(--color-ocean-abyss);
-  border: 1px solid rgba(139, 148, 158, 0.2);
+.prose-galactic pre {
+  background: var(--color-space-ink);
+  border: 1px solid rgba(30, 144, 255, 0.2);
   border-radius: 12px;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
 }
 
 /* Inline code */
-.prose-biolume code {
-  background: rgba(51, 187, 197, 0.1);
-  border: 1px solid rgba(51, 187, 197, 0.2);
+.prose-galactic code {
+  background: rgba(0, 255, 255, 0.1);
+  border: 1px solid rgba(0, 255, 255, 0.2);
   border-radius: 4px;
   padding: 0.2em 0.4em;
   font-size: 0.875em;
 }
 
 /* Lists */
-.prose-biolume ul > li::marker {
-  color: var(--color-biolume-cyan);
+.prose-galactic ul > li::marker {
+  color: var(--color-biolume-aqua);
 }
 
-.prose-biolume ol > li::marker {
-  color: var(--color-star-dim);
+.prose-galactic ol > li::marker {
+  color: var(--color-text-dim);
 }
 
 /* Links hover effect */
-.prose-biolume a {
+.prose-galactic a {
   text-decoration: none;
   border-bottom: 1px solid transparent;
   transition: border-color 0.3s ease, color 0.3s ease;
 }
 
-.prose-biolume a:hover {
-  border-bottom-color: var(--color-biolume-cyan);
-  color: var(--color-biolume-teal);
+.prose-galactic a:hover {
+  border-bottom-color: var(--color-sea-surface);
+  color: var(--color-sea-mid);
 }
 
 /* Tables */
-.prose-biolume table {
-  background: rgba(13, 17, 23, 0.5);
+.prose-galactic table {
+  background: rgba(15, 23, 42, 0.5);
   border-radius: 8px;
   overflow: hidden;
 }
 
-.prose-biolume th {
-  background: rgba(51, 187, 197, 0.1);
+.prose-galactic th {
+  background: rgba(0, 255, 255, 0.1);
   font-weight: 600;
-  color: var(--color-star-light);
+  color: var(--color-text-bright);
 }
 
 /* Strong text */
-.prose-biolume strong {
-  color: var(--color-biolume-cyan);
+.prose-galactic strong {
+  color: var(--color-sea-surface);
   font-weight: 600;
+}
+
+/* ============================================
+   VIEW TRANSITIONS - Hyperspace Jump Effect
+   ============================================ */
+
+::view-transition-old(root) {
+  animation: hyperspace-out 0.6s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+::view-transition-new(root) {
+  animation: hyperspace-in 0.6s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+/* ============================================
+   ACCESSIBILITY - Reduced Motion Support (STEP-13)
+   ============================================
+
+   Starlight Commentary:
+   Not all travelers wish to experience intense cosmic motion.
+   This media query respects user preferences for reduced animation,
+   providing a calmer journey through our digital universe.
+   This is both an accessibility requirement and a gesture of respect
+   for individual preferences.
+*/
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+
+  /* Preserve essential fade-in for content visibility */
+  .hero-animate {
+    animation: fadeInUp 0.01s ease-out forwards !important;
+  }
+
+  /* Disable magnetic effect transforms */
+  [data-magnetic] {
+    transform: none !important;
+  }
+
+  /* Simplify aurora animations */
+  .animate-\[aurora-flow-1_80s_linear_infinite\],
+  .animate-\[aurora-flow-2_70s_linear_infinite\],
+  .animate-\[aurora-flow-3_60s_linear_infinite\] {
+    animation: none !important;
+  }
 }
